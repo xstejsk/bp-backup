@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - BACKEND_URL=http://backend:8080/
+      - DEBUG=false
+  backend:
+    # image: "docker-spring-boot-postgres:latest"
+    container_name: backend
+    build:
+      context: ./sports-reservation-system-backend
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/reservationsystem
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SQL_INIT_MODE=always
+      - JWT_SECRET=secret
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=myjavatenniscourts@gmail.com
+      - SMTP_PASSWORD=qqvloapsezcxprht
+      - FRONTEND_URL=http://localhost:8001
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: "postgres:16.0-alpine3.18"
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=reservationsystem
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
