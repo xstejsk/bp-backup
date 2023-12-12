@@ -1,7 +1,7 @@
-## Webová aplikace pro evidenci rezervací - dokumentace
+## Webová aplikace pro evidenci rezervací - manuál pro spuštění
 
 ## Popis
-Tento projekt byl vytvořen jako bakalářská práce na téma "Webová aplikace pro evidenci rezervací". Cílem práce bylo vytvořit webovou aplikaci, která umožní evidenci rezervací a jejich správu. Aplikace je určena primárně pro provozovatele sportovních středisek. Aplikace umožňuje vytvářet, upravovat a mazat události a příslušené rezervace, vytvářet, mazat a upravovat kalendáře událostí a spravovat uživatelské účty.
+Tento projekt byl vytvořen jako bakalářská práce na téma Webová aplikace pro evidenci rezervací. Cílem práce bylo vytvořit webovou aplikaci, která umožní evidenci rezervací a jejich správu. Aplikace je určena primárně pro provozovatele sportovních středisek. Aplikace umožňuje vytvářet, upravovat a mazat události a příslušené rezervace, vytvářet, mazat a upravovat kalendáře událostí a spravovat uživatelské účty.
 
 ## Instalace
 
@@ -19,6 +19,8 @@ Aplikaci je možné spustit pomocí `docker-compose` příkazem:
 docker-compose up
 ```
 
+Tento příkaz je nutné spustit ve složce, která obsahuje soubor `docker-compose.yaml`
+
 Serverová aplikace bude dostupná na adrese `http://localhost:8080`, klientská aplikace na adrese `http://localhost:8001`. Pokud jsou porty již obsazené, je možné je změnit v souboru `docker-compose.yml`, doporučuji však pokud možno porty uvolnit a aplikaci spustit na původních portech.
 
 ### Inicializace databáze
@@ -30,7 +32,7 @@ heslo: admin
 ```
 Heslo je možné změnit v nastavení uživatele.
 
-Databáze je naplněna ukázkovými daty. Pokud jsou ukázková data nežádoucí, upravte prosím soubor `sports-reservation-system-backend\src\main\resources\data.sql` a odstraňte řádky s ukázkovými daty.
+Databáze je naplněna ukázkovými daty, jedním administrátorským účtem a několika uživatelskými účty. Údaje pro přihlášení k administrátorskému účtu jsou totožné jako údaje uvedeny výše, heslo pro všechny ostatní uživatele zní `heslo`.Pokud jsou ukázková data nežádoucí, upravte prosím soubor `sports-reservation-system-backend\src\main\resources\data.sql` a odstraňte řádky s ukázkovými daty.
 Zmíněný soubor však musí obsahovat řádek s vytvořením administrátorského účtu, kde heslo je hashováno pomocí `bcrypt`. Zároveň je nutné, aby soubor obsahoval alespoň jeden záznam v tabulce `location`, lokace totiž nelze vytvářet v aplikaci, ale pouze v databázi.
 Při vkládání nových řádků do souboru prosím uveďtě klauzule `ON CONFLICT ...`, aby nedošlo k chybě při opětovném spuštění aplikace.
 
